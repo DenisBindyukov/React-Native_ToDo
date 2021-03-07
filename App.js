@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, View, ScrollView, FlatList} from 'react-native';
+import {StyleSheet,View,FlatList} from 'react-native';
 import {Navbar} from "./src/Navbar";
 import {AddTodo} from "./src/AddTodo";
 import {Todo} from "./src/Todo";
@@ -23,14 +23,14 @@ export default function App() {
     }
 
     return (
-        <View>
+        <View style={styles.appContainer}>
             <Navbar title={'Todo App!'}/>
             <View style={styles.container}>
                 <AddTodo onSubmit={addTodo}/>
 
                 <FlatList
-                    keyExtractor={item => item.id}
                     data={todos}
+                    keyExtractor={item => item.id}
                     renderItem={({item}) => <Todo todo={item}  onRemove={removeTodo}/>}
                 />
             </View>
@@ -39,7 +39,11 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+    appContainer: {
+        flex: 1
+    },
     container: {
+        flex: 1,
         paddingHorizontal: 30,
         paddingVertical: 20
     }

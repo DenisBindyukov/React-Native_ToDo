@@ -1,13 +1,18 @@
 import React, {useState} from 'react';
-import {StyleSheet, View, TextInput, Button} from 'react-native';
+import {StyleSheet, View, TextInput, Button,Alert} from 'react-native';
+
 
 export const AddTodo = ({onSubmit}) => {
 
     const [value, setValue] = useState('')
 
     const pressHandler = () => {
-        onSubmit(value)
-        setValue('')
+        if(value.trim()) {
+            onSubmit(value)
+            setValue('')
+        }else {
+            Alert.alert('Field can not be empty')
+        }
     }
 
 
@@ -18,6 +23,7 @@ export const AddTodo = ({onSubmit}) => {
                 onChangeText={text => setValue(text)}
                 value={value}
                 placeholder={'Inter value'}
+                autoCorrect={false }
             />
             {/*// keyboardType={'numeric'}*/}
             <Button title={'Add'} onPress={pressHandler} />
