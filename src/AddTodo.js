@@ -10,14 +10,17 @@ export const AddTodo = ({onSubmit}) => {
         setValue('')
     }
 
+
     return (
         <View style={styles.block}>
             <TextInput
                 style={styles.input}
                 onChangeText={text => setValue(text)}
                 value={value}
-                placeholder={'Inter value'}/>
-            <Button title={'Add'} onPress={pressHandler}/>
+                placeholder={'Inter value'}
+            />
+            {/*// keyboardType={'numeric'}*/}
+            <Button title={'Add'} onPress={pressHandler} />
         </View>
     );
 }
