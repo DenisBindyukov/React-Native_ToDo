@@ -11,7 +11,7 @@ export const AddTodo = ({onSubmit}) => {
             onSubmit(value)
             setValue('')
         }else {
-            Alert.alert('Field can not be empty')
+            Alert  .alert('Field can not be empty')
         }
     }
 
