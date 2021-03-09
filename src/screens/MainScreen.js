@@ -13,7 +13,7 @@ export const MainScreen = ({addTodo, removeTodo, todos, openTodo}) => {
             <FlatList
                 data={todos}
                 keyExtractor={item => item.id}
-                renderItem={({item}) => <Todo todo={item}  onRemove={removeTodo} onOpen={openTodo}/>}
+                renderItem={({item}) => <Todo color={'red'} todo={item}  onRemove={removeTodo} onOpen={openTodo}/>}
             />
         </View>
     );
