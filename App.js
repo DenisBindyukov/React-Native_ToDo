@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
-import {StyleSheet, View, Alert} from 'react-native';
+import {StyleSheet, View, Alert, ImageBackground, SafeAreaView, Text, StatusBar} from 'react-native';
+import { useFonts } from 'expo-font';
+
 import {Navbar} from "./src/components/Navbar";
 import {MainScreen} from "./src/screens/MainScreen";
 import {TodoScreen} from "./src/screens/TodoScreens";
@@ -7,11 +9,18 @@ import {TodoScreen} from "./src/screens/TodoScreens";
 
 export default function App() {
 
+    let [fontsLoaded] = useFonts( {
+        'roboto-regular': require('./assets/fonts/Roboto-Regular.ttf'),
+        'roboto-bold': require('./assets/fonts/Roboto-Bold.ttf')
+    });
+
     const [todos, setTodos] = useState([
         {id: '1', title: 'Learn to React Native'},
         {id: '2', title: 'Learn to React '},
     ])
     const [todoId, setTodoId] = useState(null)
+    const [isReady, setIsReady] = useState(false)
+
 
     const addTodo = (title) => {
 
@@ -64,6 +73,20 @@ export default function App() {
         todos={todos}
         openTodo={setTodoId}/>
 
+    if (!fontsLoaded) {
+        // Страница загрузки приложения
+        return (
+            <SafeAreaView style={styles.statusBar}>
+                <ImageBackground style={styles.bg} resizeMode="cover" source={require('./assets/todoist_premium.png')} >
+                    <View style={styles.wrapperDowlandFonts}>
+                        <Text style={{color: 'aqua', alignSelf: 'center'}}>Загрузка шрифтов...</Text>
+                    </View>
+                </ImageBackground>
+            </SafeAreaView>
+        )
+    }
+
+
     if (todoId) {
 
         const selected = todos.find(t => t.id === todoId)
@@ -89,11 +112,27 @@ export default function App() {
 
 const styles = StyleSheet.create({
     appContainer: {
+        // На ширину всего экрана
         flex: 1
     },
     container: {
         flex: 1,
         paddingHorizontal: 30,
         paddingVertical: 20
+    },
+    statusBar: {
+        flex: 1,
+        backgroundColor: 'black',
+        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0
+    },
+    bg: {
+        flex: 1
+    },
+    wrapperDowlandFonts: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        padding: 20,
+        fontFamily: 'Inter_400Regular'
     }
 });

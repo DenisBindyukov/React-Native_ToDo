@@ -19,6 +19,7 @@ export const MainScreen = ({addTodo, removeTodo, todos, openTodo}) => {
                 <Image style={styles.img} source={require('../../assets/no-items.png')}/>
             </View>
 
+            //Подтягивать картинку url ссылкой
             // <Image
             //     style={styles.imgWrap}
             //     source={ {uri: 'https://senior.ua/storage/article/content/ab78bc8c-3690-4fbc-b1ec-1c61779241de.jpeg'} }
