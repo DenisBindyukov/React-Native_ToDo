@@ -3,8 +3,7 @@ import {StyleSheet, View, Alert} from 'react-native';
 import {Navbar} from "./src/components/Navbar";
 import {MainScreen} from "./src/screens/MainScreen";
 import {TodoScreen} from "./src/screens/TodoScreens";
-import {AppButton} from "./src/components/button";
-import {getBackgroundColor} from "react-native/Libraries/LogBox/UI/LogBoxStyle";
+
 
 export default function App() {
 
