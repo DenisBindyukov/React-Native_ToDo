@@ -1,15 +1,16 @@
 import React, {useState} from 'react';
 import {StyleSheet, View, Alert, ImageBackground, SafeAreaView, Text, StatusBar} from 'react-native';
-import { useFonts } from 'expo-font';
+import {useFonts} from 'expo-font';
 
 import {Navbar} from "./src/components/Navbar";
 import {MainScreen} from "./src/screens/MainScreen";
 import {TodoScreen} from "./src/screens/TodoScreens";
+import {AppTextBold} from "./src/common/AppTextBold";
 
 
 export default function App() {
 
-    let [fontsLoaded] = useFonts( {
+    let [fontsLoaded] = useFonts({
         'roboto-regular': require('./assets/fonts/Roboto-Regular.ttf'),
         'roboto-bold': require('./assets/fonts/Roboto-Bold.ttf')
     });
@@ -77,9 +78,9 @@ export default function App() {
         // Страница загрузки приложения
         return (
             <SafeAreaView style={styles.statusBar}>
-                <ImageBackground style={styles.bg} resizeMode="cover" source={require('./assets/todoist_premium.png')} >
+                <ImageBackground style={styles.bg} resizeMode="cover" source={require('./assets/todoist_premium.png')}>
                     <View style={styles.wrapperDowlandFonts}>
-                        <Text style={{color: 'aqua', alignSelf: 'center'}}>Загрузка шрифтов...</Text>
+                        <AppTextBold> Загрузка шрифтов... </AppTextBold>
                     </View>
                 </ImageBackground>
             </SafeAreaView>
