@@ -134,6 +134,5 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'flex-end',
         padding: 20,
-        fontFamily: 'Inter_400Regular'
     }
 });
