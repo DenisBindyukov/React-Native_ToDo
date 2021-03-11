@@ -5,7 +5,6 @@ import {useFonts} from 'expo-font';
 import {Navbar} from "./src/components/Navbar";
 import {MainScreen} from "./src/screens/MainScreen";
 import {TodoScreen} from "./src/screens/TodoScreens";
-import {AppTextBold} from "./src/common/AppTextBold";
 
 
 export default function App() {
@@ -78,9 +77,9 @@ export default function App() {
         // Страница загрузки приложения
         return (
             <SafeAreaView style={styles.statusBar}>
-                <ImageBackground style={styles.bg} resizeMode="cover" source={require('./assets/todoist_premium.png')}>
+                <ImageBackground style={styles.bg} resizeMode="cover" source={require('./assets/no-items.png')}>
                     <View style={styles.wrapperDowlandFonts}>
-                        <AppTextBold> Загрузка шрифтов... </AppTextBold>
+                        <Text> Загрузка шрифтов... </Text>
                     </View>
                 </ImageBackground>
             </SafeAreaView>

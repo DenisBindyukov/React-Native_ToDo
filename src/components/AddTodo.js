@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-import {StyleSheet, View, TextInput, Button,Alert} from 'react-native';
+import {StyleSheet, View, TextInput, Button, Alert} from 'react-native';
+import {SimpleLineIcons} from '@expo/vector-icons'
 
 
 export const AddTodo = ({onSubmit}) => {
@@ -7,11 +8,11 @@ export const AddTodo = ({onSubmit}) => {
     const [value, setValue] = useState('')
 
     const pressHandler = () => {
-        if(value.trim()) {
+        if (value.trim()) {
             onSubmit(value)
             setValue('')
-        }else {
-            Alert  .alert('Field can not be empty')
+        } else {
+            Alert.alert('Field can not be empty')
         }
     }
 
@@ -23,10 +24,15 @@ export const AddTodo = ({onSubmit}) => {
                 onChangeText={text => setValue(text)}
                 value={value}
                 placeholder={'Inter value'}
-                autoCorrect={false }
+                autoCorrect={false}
             />
+            {/*Тип для установки клавиатуры ввода в инпут*/}
             {/*// keyboardType={'numeric'}*/}
-            <Button title={'Add'} onPress={pressHandler} />
+
+            {/*(иконка из библиотеки expo преабразуем иконку сразу в кнопку) */}
+            <SimpleLineIcons.Button name={'plus'} size={20}  color={'white'} onPress={pressHandler}>
+                add
+            </SimpleLineIcons.Button>
         </View>
     );
 }
@@ -39,7 +45,7 @@ const styles = StyleSheet.create({
         marginBottom: 15
     },
     input: {
-        width: '80%',
+        width: '70%',
         padding: 10,
         borderStyle: 'solid',
         borderBottomWidth: 2,
