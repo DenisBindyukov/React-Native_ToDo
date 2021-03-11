@@ -4,6 +4,7 @@ import {useFonts} from 'expo-font';
 
 import {Navbar} from "./src/components/Navbar";
 import {MainScreen} from "./src/screens/MainScreen";
+import {THEME} from "./src/THEME";
 import {TodoScreen} from "./src/screens/TodoScreens";
 
 
@@ -117,7 +118,7 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        paddingHorizontal: 30,
+        paddingHorizontal: THEME.PADDING_HORIZONTAL,
         paddingVertical: 20
     },
     statusBar: {

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, Dimensions} from 'react-native';
 import {FontAwesome, AntDesign} from '@expo/vector-icons'
 import {THEME} from '../THEME';
 import {AppCard} from "../components/ui/AppCard";
@@ -56,7 +56,10 @@ const styles = StyleSheet.create({
         padding: 15
     },
     button: {
-        width: '40%'
+        // Class Dimensions.get() возврощает нам ширину экрана устройства, тем самым мы можем одоптивно настраивать любые свойства css
+        // делая те или инные проверки.
+        //width: Dimensions.get('window').width / 3
+        width: Dimensions.get('window').width > 400 ? 150 : 100
     },
     title: {
         fontSize: 20
