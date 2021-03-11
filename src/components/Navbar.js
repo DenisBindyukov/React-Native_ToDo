@@ -5,6 +5,7 @@ import {AppTextBold} from "../common/AppTextBold";
 
 export const Navbar = ({title}) => {
 
+    // ОПРЕДИЛЕНИЕ ПЛАТФОРМЫ
     // метод select при запуске приложение делает проверку на систему ios ли android и тем самым задает нужнеое значение платформе,
     // т.е стиль заранее созданный в StyleSheet.creat()
 

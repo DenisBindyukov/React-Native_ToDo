@@ -6,6 +6,7 @@ import {AppTextBold} from "./AppTextBold";
 
 export const AppButton = ({onPress, children, color = THEME.MAIN_COLOR}) => {
 
+    // ОПРЕДИЛЕНИЕ ПЛАТФОРМЫ
     // Класс Platform озволяет сделать проверку на систему андройд или ios
     // TouchableNativeFeedback из разряда Touchable. Позволяет получить волнистый эффект при нажати.
     const Wrapper = Platform.OS === 'android' ? TouchableNativeFeedback : TouchableOpacity
