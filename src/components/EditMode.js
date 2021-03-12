@@ -14,6 +14,11 @@ export const EditMode = ({visible, onCancel, value, onSave}) => {
             onSave(title)
         }
     }
+    const cancelHandler = () => {
+        setTitle(value)
+        onCancel(false)
+    }
+
 
     return (
 
@@ -31,7 +36,7 @@ export const EditMode = ({visible, onCancel, value, onSave}) => {
                 <View style={styles.buttons}>
                     <AppButton
                         color={THEME.DANGER_COLOR}
-                        onPress={() => onCancel(false)}>
+                        onPress={cancelHandler }>
                           Cancel
                     </AppButton>
                     <AppButton

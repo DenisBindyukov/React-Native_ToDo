@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useReducer, useState} from 'react';
 import {StyleSheet, View, Alert, ImageBackground, SafeAreaView, Text, StatusBar} from 'react-native';
 import {useFonts} from 'expo-font';
 
@@ -6,6 +6,14 @@ import {Navbar} from "./src/components/Navbar";
 import {MainScreen} from "./src/screens/MainScreen";
 import {THEME} from "./src/THEME";
 import {TodoScreen} from "./src/screens/TodoScreens";
+import {
+    deleteTodoAC,
+    todoReducer,
+    addTodoAC,
+    updateTodoAC,
+    initializeState,
+    setValueId
+} from "./src/redusers/todoReducer";
 
 
 export default function App() {
@@ -15,33 +23,19 @@ export default function App() {
         'roboto-bold': require('./assets/fonts/Roboto-Bold.ttf')
     });
 
-    const [todos, setTodos] = useState([
-        {id: '1', title: 'Learn to React Native'},
-        {id: '2', title: 'Learn to React '},
-    ])
-    const [todoId, setTodoId] = useState(null)
-    const [isReady, setIsReady] = useState(false)
+    const [state, dispatch] = useReducer(todoReducer,initializeState)
 
 
     const addTodo = (title) => {
-
-        setTodos((state) => [
-            {
-                id: Date.now().toString(),
-                title
-            },
-            ...state])
+        dispatch(addTodoAC(title))
     }
+const updateTodo = (id, title) => {
+    dispatch(updateTodoAC(id, title))
+}
 
-    const updateTodo = (id, title) => {
-        setTodos(state =>
-            state.map(todo => {
-                if (todo.id === id) {
-                    todo.title = title
-                }
-                return todo
-            }))
-    }
+const screenSetTodoID = value => {
+    dispatch(setValueId(value))
+}
 
     const removeTodo = (id) => {
 
@@ -59,8 +53,8 @@ export default function App() {
                     text: 'OK',
                     style: 'positive',
                     onPress: () => {
-                        setTodoId(null)
-                        setTodos((state) => state.filter((todo) => todo.id !== id))
+                        screenSetTodoID(null)
+                        dispatch(deleteTodoAC(id))
                     }
                 }
             ],
@@ -71,8 +65,8 @@ export default function App() {
     let content = <MainScreen
         addTodo={addTodo}
         removeTodo={removeTodo}
-        todos={todos}
-        openTodo={setTodoId}/>
+        todos={state.todo}
+        openTodo={screenSetTodoID}/>
 
     if (!fontsLoaded) {
         // Страница загрузки приложения
@@ -88,16 +82,16 @@ export default function App() {
     }
 
 
-    if (todoId) {
+    if (state.todoId) {
 
-        const selected = todos.find(t => t.id === todoId)
+        const selected = state.todo.find(t => t.id === state.todoId)
 
         content = <TodoScreen
             onRemove={removeTodo}
             todo={selected}
             onSave={updateTodo}
             goBack={() => {
-                setTodoId(null)
+                screenSetTodoID(null)
             }}/>
     }
 
