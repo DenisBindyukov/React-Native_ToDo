@@ -16,8 +16,7 @@ export default function App() {
     });
 
     const [todos, setTodos] = useState([
-        {id: '1', title: 'Learn to React Native'},
-        {id: '2', title: 'Learn to React '},
+
     ])
     const [todoId, setTodoId] = useState(null)
     const [isReady, setIsReady] = useState(false)
