@@ -3,8 +3,9 @@ import {FlatList, StyleSheet, View, Image, Dimensions} from 'react-native';
 import {AddTodo} from "../components/AddTodo";
 import {Todo} from "../components/Todo";
 import {THEME} from "../THEME";
+import {AppLoader} from "../common/ui/AppLoader";
 
-export const MainScreen = ({addTodo, removeTodo, todos, openTodo}) => {
+export const MainScreen = ({addTodo, removeTodo, todos, openTodo, loading}) => {
 
     const [deviceWidth, setDeviceWidth] = useState(Dimensions.get('window').width - THEME.PADDING_HORIZONTAL * 2)
 
@@ -22,6 +23,14 @@ export const MainScreen = ({addTodo, removeTodo, todos, openTodo}) => {
             Dimensions.removeEventListener('change', update)
         }
     }, [])
+
+    if (loading) {
+        return (
+            <View style={styles.center}>
+                <AppLoader/>
+            </View>
+        )
+    }
 
     let content = (
         <View style={{deviceWidth}}>
@@ -57,7 +66,6 @@ export const MainScreen = ({addTodo, removeTodo, todos, openTodo}) => {
 
 const styles = StyleSheet.create({
     imgWrap: {
-
         padding: 10,
         height: 300,
     },
@@ -65,6 +73,9 @@ const styles = StyleSheet.create({
         height: '100%',
         width: '100%',
         resizeMode: 'contain',
+    },
+    center: {
+        flex: 1
     }
 
 });

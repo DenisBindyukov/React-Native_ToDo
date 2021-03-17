@@ -12,7 +12,7 @@ export const initializeState = {
     todos: [],
     todoId: null,
     loading: false,
-    error: null
+    error: false
 }
 
 export const todoReducer = (state, action) => {
@@ -79,5 +79,5 @@ export const setValueIdAC = (value) => ({type: SET_VALUE_ID, value})
 export const showLoaderAC = () => ({type: SHOW_LOADER})
 export const hideLoaderAC = () => ({type: HIDE_LOADER})
 export const showErrorAC = (error) => ({type: SHOW_ERROR, error})
-export const clearErrorAC = () => ({type: HIDE_LOADER})
+export const clearErrorAC = () => ({type: CLEAR_ERROR})
 export const fetchTodosAC = (todos) => ({type: FETCH_TODOS, todos})

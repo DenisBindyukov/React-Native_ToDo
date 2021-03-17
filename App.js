@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useReducer} from 'react';
+import React, {useEffect, useReducer} from 'react';
 import {StyleSheet, View, Alert, ImageBackground, SafeAreaView, Text, StatusBar} from 'react-native';
 import {useFonts} from 'expo-font';
 
@@ -30,7 +30,6 @@ export default function App() {
 
     const [state, dispatch] = useReducer(todoReducer, initializeState)
 
-    console.log(state.todos)
 
     const addTodo = async (title) => {
         const response = await fetch(
@@ -96,6 +95,7 @@ export default function App() {
     }
 
     const fetchTodos = async () => {
+        dispatch(showLoaderAC())
         const response = await fetch('https://rn-todolist-app-default-rtdb.europe-west1.firebasedatabase.app/todos.json', {
             method: 'GET',
             headers: {'Content-Type': 'application/json'}
@@ -105,10 +105,12 @@ export default function App() {
         const data = await response.json()
         const todos = Object.keys(data).map(key => ({...data[key], id: key}))
          dispatch(fetchTodosAC(todos))
+        dispatch(hideLoaderAC())
     }
 
 
     let content = <MainScreen
+        loading={state.loading}
         addTodo={addTodo}
         removeTodo={removeTodo}
         todos={state.todos}
