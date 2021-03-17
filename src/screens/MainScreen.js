@@ -56,8 +56,7 @@ export const MainScreen = ({addTodo, removeTodo, todos, openTodo}) => {
 
 const styles = StyleSheet.create({
     imgWrap: {
-        justifyContent: 'center',
-        alignItems: 'center',
+
         padding: 10,
         height: 300,
     },
