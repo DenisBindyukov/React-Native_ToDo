@@ -2,9 +2,9 @@ import React, {useState} from 'react';
 import {StyleSheet, Text, View, Dimensions} from 'react-native';
 import {FontAwesome, AntDesign} from '@expo/vector-icons'
 import {THEME} from '../THEME';
-import {AppCard} from "../components/ui/AppCard";
+import {AppCard} from "../common/ui/AppCard";
 import {EditMode} from "../components/EditMode";
-import {AppButton} from "../common/AppButton";
+import {AppButton} from "../common/ui/AppButton";
 
 export const TodoScreen = ({goBack, todo, onRemove, onSave}) => {
 

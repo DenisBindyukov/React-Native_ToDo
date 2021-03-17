@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {FlatList, StyleSheet, View, Text, Image, Dimensions} from 'react-native';
+import {FlatList, StyleSheet, View, Image, Dimensions} from 'react-native';
 import {AddTodo} from "../components/AddTodo";
 import {Todo} from "../components/Todo";
 import {THEME} from "../THEME";
@@ -7,6 +7,7 @@ import {THEME} from "../THEME";
 export const MainScreen = ({addTodo, removeTodo, todos, openTodo}) => {
 
     const [deviceWidth, setDeviceWidth] = useState(Dimensions.get('window').width - THEME.PADDING_HORIZONTAL * 2)
+
 
     useEffect(() => {
         const update = () => {

@@ -20,12 +20,7 @@ export const todoReducer = (state, action) => {
         case ADD_TODO:
             return {
                 ...state,
-                todos: [{
-                    id: Date.now().toString(),
-                    title: action.title
-                },
-                    ...state.todos
-                ]
+                todos: [{id: action.id, title: action.title}, ...state.todos]
             }
         case DELETE_TODO:
             return {
@@ -79,7 +74,7 @@ export const todoReducer = (state, action) => {
 
 export const updateTodoAC = (id, title) => ({type: UPDATE_TODO, id, title})
 export const deleteTodoAC = (id) => ({type: DELETE_TODO, id})
-export const addTodoAC = (title) => ({type: ADD_TODO, title})
+export const addTodoAC = (title, id) => ({type: ADD_TODO, title, id})
 export const setValueIdAC = (value) => ({type: SET_VALUE_ID, value})
 export const showLoaderAC = () => ({type: SHOW_LOADER})
 export const hideLoaderAC = () => ({type: HIDE_LOADER})

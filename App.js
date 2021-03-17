@@ -1,4 +1,4 @@
-import React, {useReducer} from 'react';
+import React, {useCallback, useEffect, useReducer} from 'react';
 import {StyleSheet, View, Alert, ImageBackground, SafeAreaView, Text, StatusBar} from 'react-native';
 import {useFonts} from 'expo-font';
 
@@ -18,6 +18,11 @@ import {
 
 export default function App() {
 
+    useEffect(() => {
+         fetchTodos()
+    }, [])
+
+
     let [fontsLoaded] = useFonts({
         'roboto-regular': require('./assets/fonts/Roboto-Regular.ttf'),
         'roboto-bold': require('./assets/fonts/Roboto-Bold.ttf')
@@ -25,9 +30,20 @@ export default function App() {
 
     const [state, dispatch] = useReducer(todoReducer, initializeState)
 
+    console.log(state.todos)
 
-    const addTodo = (title) => {
-        dispatch(addTodoAC(title))
+    const addTodo = async (title) => {
+        const response = await fetch(
+            'https://rn-todolist-app-default-rtdb.europe-west1.firebasedatabase.app/todos.json',
+            {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({title})
+            }
+        )
+
+        const data = await response.json()
+        dispatch(addTodoAC(title, data.name))
     }
 
     const updateTodo = (id, title) => {
@@ -79,8 +95,16 @@ export default function App() {
         dispatch(clearErrorAC())
     }
 
-    const fetchTodos = (todos) => {
-        dispatch(fetchTodosAC(todos))
+    const fetchTodos = async () => {
+        const response = await fetch('https://rn-todolist-app-default-rtdb.europe-west1.firebasedatabase.app/todos.json', {
+            method: 'GET',
+            headers: {'Content-Type': 'application/json'}
+        })
+
+        // получаем из сервера объект промис и трасформируем ешго в нужный нам тип объекта.
+        const data = await response.json()
+        const todos = Object.keys(data).map(key => ({...data[key], id: key}))
+         dispatch(fetchTodosAC(todos))
     }
 
 

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {StyleSheet, View, Button, TextInput, Modal, Alert} from 'react-native';
 import {THEME} from "../THEME";
-import {AppButton} from "../common/AppButton";
+import {AppButton} from "../common/ui/AppButton";
 
 export const EditMode = ({visible, onCancel, value, onSave}) => {
 

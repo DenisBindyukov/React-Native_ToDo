@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, View, TouchableOpacity, TouchableNativeFeedback, Platform} from 'react-native';
 import {SimpleLineIcons} from '@expo/vector-icons'
-import {THEME} from "../THEME";
+import {THEME} from "../../THEME";
 import {AppTextBold} from "./AppTextBold";
 
 export const AppButton = ({onPress, children, color = THEME.MAIN_COLOR}) => {
