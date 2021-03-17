@@ -1,4 +1,4 @@
-import React, {useReducer, useState} from 'react';
+import React, {useReducer} from 'react';
 import {StyleSheet, View, Alert, ImageBackground, SafeAreaView, Text, StatusBar} from 'react-native';
 import {useFonts} from 'expo-font';
 
@@ -12,7 +12,7 @@ import {
     addTodoAC,
     updateTodoAC,
     initializeState,
-    setValueId
+    setValueIdAC, showLoaderAC, hideLoaderAC, showErrorAC, clearErrorAC, fetchTodosAC
 } from "./src/redusers/todoReducer";
 
 
@@ -23,23 +23,24 @@ export default function App() {
         'roboto-bold': require('./assets/fonts/Roboto-Bold.ttf')
     });
 
-    const [state, dispatch] = useReducer(todoReducer,initializeState)
+    const [state, dispatch] = useReducer(todoReducer, initializeState)
 
 
     const addTodo = (title) => {
         dispatch(addTodoAC(title))
     }
-const updateTodo = (id, title) => {
-    dispatch(updateTodoAC(id, title))
-}
 
-const screenSetTodoID = value => {
-    dispatch(setValueId(value))
-}
+    const updateTodo = (id, title) => {
+        dispatch(updateTodoAC(id, title))
+    }
+
+    const screenSetTodoID = value => {
+        dispatch(setValueIdAC(value))
+    }
 
     const removeTodo = (id) => {
 
-        const selectedTodo = todos.find(td => td.id === id)
+        const selectedTodo = state.todos.find(td => td.id === id)
 
         Alert.alert(
             'Remove To do element',
@@ -62,10 +63,31 @@ const screenSetTodoID = value => {
         );
     }
 
+    const showLoader = () => {
+        dispatch(showLoaderAC())
+    }
+
+    const hideLoader = () => {
+        dispatch(hideLoaderAC())
+    }
+
+    const showError = (error) => {
+        dispatch(showErrorAC(error))
+    }
+
+    const clearError = () => {
+        dispatch(clearErrorAC())
+    }
+
+    const fetchTodos = (todos) => {
+        dispatch(fetchTodosAC(todos))
+    }
+
+
     let content = <MainScreen
         addTodo={addTodo}
         removeTodo={removeTodo}
-        todos={state.todo}
+        todos={state.todos}
         openTodo={screenSetTodoID}/>
 
     if (!fontsLoaded) {
@@ -84,7 +106,7 @@ const screenSetTodoID = value => {
 
     if (state.todoId) {
 
-        const selected = state.todo.find(t => t.id === state.todoId)
+        const selected = state.todos.find(t => t.id === state.todoId)
 
         content = <TodoScreen
             onRemove={removeTodo}

@@ -2,10 +2,17 @@ const ADD_TODO = 'ADD-TODO';
 const DELETE_TODO = 'DELETE-TODO';
 const UPDATE_TODO = 'UPDATE-TODO';
 const SET_VALUE_ID = 'SET-VALUE-ID';
+const SHOW_LOADER = 'SHOW-LOADER';
+const HIDE_LOADER = 'HIDE-LOADER';
+const SHOW_ERROR = 'SHOW-ERROR';
+const CLEAR_ERROR = 'CLEAR- ERROR';
+const FETCH_TODOS = 'FETCH-TODOS';
 
 export const initializeState = {
-    todo: [{id: '1', title: 'TV-sell'}],
-    todoId: null
+    todos: [],
+    todoId: null,
+    loading: false,
+    error: null
 }
 
 export const todoReducer = (state, action) => {
@@ -13,27 +20,57 @@ export const todoReducer = (state, action) => {
         case ADD_TODO:
             return {
                 ...state,
-                todo: [{
+                todos: [{
                     id: Date.now().toString(),
                     title: action.title
                 },
-                    ...state.todo
+                    ...state.todos
                 ]
             }
         case DELETE_TODO:
             return {
                 ...state,
-                todo: state.todo.filter(td => td.id !== action.id)
+                todos: state.todos.filter(td => td.id !== action.id)
             }
         case UPDATE_TODO:
             return {
                 ...state,
-                todo: state.todo.map(td => td.id === action.id ? {...td, title: action.title} : td)
+                todos: state.todos.map(td => td.id === action.id ? {...td, title: action.title} : td)
             }
         case SET_VALUE_ID: {
             return {
                 ...state,
                 todoId: action.value
+            }
+        }
+        case SHOW_LOADER: {
+            return {
+                ...state,
+                loading: true
+            }
+        }
+        case HIDE_LOADER: {
+            return {
+                ...state,
+                loading: false
+            }
+        }
+        case SHOW_ERROR: {
+            return {
+                ...state,
+                error: action.error
+            }
+        }
+        case CLEAR_ERROR: {
+            return {
+                ...state,
+                error: null
+            }
+        }
+        case FETCH_TODOS: {
+            return {
+                ...state,
+                todos: action.todos
             }
         }
     }
@@ -43,4 +80,9 @@ export const todoReducer = (state, action) => {
 export const updateTodoAC = (id, title) => ({type: UPDATE_TODO, id, title})
 export const deleteTodoAC = (id) => ({type: DELETE_TODO, id})
 export const addTodoAC = (title) => ({type: ADD_TODO, title})
-export const setValueId = (value) => ({type: SET_VALUE_ID, value})
+export const setValueIdAC = (value) => ({type: SET_VALUE_ID, value})
+export const showLoaderAC = () => ({type: SHOW_LOADER})
+export const hideLoaderAC = () => ({type: HIDE_LOADER})
+export const showErrorAC = (error) => ({type: SHOW_ERROR, error})
+export const clearErrorAC = () => ({type: HIDE_LOADER})
+export const fetchTodosAC = (todos) => ({type: FETCH_TODOS, todos})
