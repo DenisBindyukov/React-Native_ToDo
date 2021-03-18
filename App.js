@@ -14,12 +14,14 @@ import {
     initializeState,
     setValueIdAC, showLoaderAC, hideLoaderAC, showErrorAC, clearErrorAC, fetchTodosAC
 } from "./src/redusers/todoReducer";
+import {AppText} from "./src/common/ui/AppText";
+import {AppButton} from "./src/common/ui/AppButton";
 
 
 export default function App() {
 
     useEffect(() => {
-         fetchTodos()
+        fetchTodos()
     }, [])
 
 
@@ -78,34 +80,26 @@ export default function App() {
         );
     }
 
-    const showLoader = () => {
-        dispatch(showLoaderAC())
-    }
-
-    const hideLoader = () => {
-        dispatch(hideLoaderAC())
-    }
-
-    const showError = (error) => {
-        dispatch(showErrorAC(error))
-    }
-
-    const clearError = () => {
-        dispatch(clearErrorAC())
-    }
 
     const fetchTodos = async () => {
         dispatch(showLoaderAC())
-        const response = await fetch('https://rn-todolist-app-default-rtdb.europe-west1.firebasedatabase.app/todos.json', {
-            method: 'GET',
-            headers: {'Content-Type': 'application/json'}
-        })
+        dispatch(clearErrorAC())
 
-        // получаем из сервера объект промис и трасформируем ешго в нужный нам тип объекта.
-        const data = await response.json()
-        const todos = Object.keys(data).map(key => ({...data[key], id: key}))
-         dispatch(fetchTodosAC(todos))
-        dispatch(hideLoaderAC())
+        try {
+            const response = await fetch('https://rn-todolist-app-default-rtdb.europe-west1.firebasedatabase.app/todos.json', {
+                method: 'GET',
+                headers: {'Content-Type': 'application/json'}
+            })
+
+            // получаем из сервера объект промис и трасформируем ешго в нужный нам тип объекта.
+            const data = await response.json()
+            const todos = Object.keys(data).map(key => ({...data[key], id: key}))
+            dispatch(fetchTodosAC(todos))
+        } catch (error) {
+            dispatch(showErrorAC(error))
+        } finally {
+            dispatch(hideLoaderAC())
+        }
     }
 
 
@@ -143,6 +137,15 @@ export default function App() {
             }}/>
     }
 
+    if (state.error) {
+        return (
+            <View style={styles.center}>
+                <AppText style={styles.error}>Something went wrong ...</AppText>
+                <AppButton onPress={fetchTodos}>Try again</AppButton>
+            </View>
+        )
+    }
+
     return (
         <View style={styles.appContainer}>
             <Navbar title={'Todo App!'}/>
@@ -176,5 +179,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'flex-end',
         padding: 20,
+    },
+    center: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    error: {
+        color: THEME.DANGER_COLOR,
+        fontFamily: 'roboto-bold',
+        fontSize: 20
     }
 });

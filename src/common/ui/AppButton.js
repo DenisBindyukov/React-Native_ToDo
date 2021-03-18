@@ -12,7 +12,7 @@ export const AppButton = ({onPress, children, color = THEME.MAIN_COLOR}) => {
     const Wrapper = Platform.OS === 'android' ? TouchableNativeFeedback : TouchableOpacity
 
     return (
-        <Wrapper onPress={onPress} activeOpacity={0.8}>
+        <Wrapper onPress={onPress} activeOpacity={0.9}>
             <View style={{...styles.button, backgroundColor: color}}>
                 <AppTextBold style={styles.text}>
                     {children}
