@@ -47,8 +47,22 @@ export default function App() {
         dispatch(addTodoAC(title, data.name))
     }
 
-    const updateTodo = (id, title) => {
-        dispatch(updateTodoAC(id, title))
+    const updateTodo = async (id, title) => {
+        clearErrorAC()
+        try {
+            await fetch(`https://rn-todolist-app-default-rtdb.europe-west1.firebasedatabase.app/todos/${id}.json`,
+                {
+                    method: 'PATCH',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({title})
+                })
+            dispatch(updateTodoAC(id, title))
+        }
+        catch (error) {
+            dispatch(showErrorAC(error))
+        }
+
+
     }
 
     const screenSetTodoID = value => {
