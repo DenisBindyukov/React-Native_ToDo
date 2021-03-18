@@ -16,6 +16,7 @@ import {
 } from "./src/redusers/todoReducer";
 import {AppText} from "./src/common/ui/AppText";
 import {AppButton} from "./src/common/ui/AppButton";
+import {Http} from "./src/http";
 
 
 export default function App() {
@@ -34,31 +35,35 @@ export default function App() {
 
 
     const addTodo = async (title) => {
-        const response = await fetch(
-            'https://rn-todolist-app-default-rtdb.europe-west1.firebasedatabase.app/todos.json',
-            {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({title})
-            }
-        )
-
-        const data = await response.json()
-        dispatch(addTodoAC(title, data.name))
+        // const response = await fetch(
+        //     'https://rn-todolist-app-default-rtdb.europe-west1.firebasedatabase.app/todos.json',
+        //     {
+        //         method: 'POST',
+        //         headers: {'Content-Type': 'application/json'},
+        //         body: JSON.stringify({title})
+        //     }
+        // )
+        //
+        // const data = await response.json()
+        try {
+            const data = await Http.post(
+                'https://rn-todolist-app-default-rtdb.europe-west1.firebasedatabase.app/todos.json',
+                {title})
+            dispatch(addTodoAC(title, data.name))
+        } catch (error) {
+            dispatch(showErrorAC(error))
+        }
     }
 
     const updateTodo = async (id, title) => {
         clearErrorAC()
         try {
-            await fetch(`https://rn-todolist-app-default-rtdb.europe-west1.firebasedatabase.app/todos/${id}.json`,
-                {
-                    method: 'PATCH',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({title})
-                })
+            await Http.patch(
+                `https://rn-todolist-app-default-rtdb.europe-west1.firebasedatabase.app/todos/${id}.json`,
+                {title}
+            )
             dispatch(updateTodoAC(id, title))
-        }
-        catch (error) {
+        } catch (error) {
             dispatch(showErrorAC(error))
         }
 
@@ -84,9 +89,14 @@ export default function App() {
                 {
                     text: 'OK',
                     style: 'positive',
-                    onPress: () => {
-                        screenSetTodoID(null)
-                        dispatch(deleteTodoAC(id))
+                    onPress: async () => {
+                        try {
+                            screenSetTodoID(null)
+                            await Http.delete(`https://rn-todolist-app-default-rtdb.europe-west1.firebasedatabase.app/todos/${id}.json`)
+                            dispatch(deleteTodoAC(id))
+                        } catch (error) {
+                            showErrorAC(error)
+                        }
                     }
                 }
             ],
@@ -100,15 +110,10 @@ export default function App() {
         dispatch(clearErrorAC())
 
         try {
-            const response = await fetch('https://rn-todolist-app-default-rtdb.europe-west1.firebasedatabase.app/todos.json', {
-                method: 'GET',
-                headers: {'Content-Type': 'application/json'}
-            })
-
-            // получаем из сервера объект промис и трасформируем ешго в нужный нам тип объекта.
-            const data = await response.json()
+            const data = await Http.get('https://rn-todolist-app-default-rtdb.europe-west1.firebasedatabase.app/todos.json')
+            // получаем из сервера объект промис и трансформируем его в нужный нам тип объекта.
             const todos = Object.keys(data).map(key => ({...data[key], id: key}))
-            dispatch(fetchTodosAC(todos))
+            dispatch(fetchTodosAC(todos.reverse()))
         } catch (error) {
             dispatch(showErrorAC(error))
         } finally {
