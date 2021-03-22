@@ -1,6 +1,5 @@
 import React from 'react';
 import {StyleSheet, View, TouchableOpacity, TouchableNativeFeedback, Platform} from 'react-native';
-import {SimpleLineIcons} from '@expo/vector-icons'
 import {THEME} from "../../THEME";
 import {AppTextBold} from "./AppTextBold";
 

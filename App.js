@@ -1,5 +1,5 @@
 import React, {useEffect, useReducer} from 'react';
-import {StyleSheet, View, Alert, ImageBackground, SafeAreaView, Text, StatusBar} from 'react-native';
+import {StyleSheet, View, Alert, ImageBackground, SafeAreaView, Text, StatusBar, Platform} from 'react-native';
 import {useFonts} from 'expo-font';
 
 import {Navbar} from "./src/components/Navbar";
